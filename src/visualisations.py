@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
-from nltk.corpus import stopwords
-import nltk
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+
 
 def CreateWordCloud(text, stop = stopwords.words('english')):
 

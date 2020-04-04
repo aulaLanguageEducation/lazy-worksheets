@@ -1,17 +1,17 @@
 import random
 import spacy
-import en_core_web_sm
-from src import utils
-
+import utils
 
 class GapFinder:
 
     def __init__(self):
-        self.nlp = en_core_web_sm.load()
+        self.nlp = spacy.load('en_core_web_sm')
 
-    def find_gaps(self, txt, removal_proportion=7):
+    def find_gaps(self, txt, removal_proportion=7, random_seed=3142):
 
         doc = self.nlp(txt)
+
+        random.seed(random_seed)
 
         tags_of_interest = ("NN",
                             "NNS",
