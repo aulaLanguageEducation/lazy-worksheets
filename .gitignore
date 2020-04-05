@@ -6,6 +6,10 @@ __pycache__/
 # fucking intelij
 *.idea/
 
+# alex's play area
+
+src/sandbox.py
+
 # C extensions
 *.so
 
