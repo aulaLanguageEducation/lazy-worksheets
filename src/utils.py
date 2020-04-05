@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-import nltk
+# from nltk.corpus import stopwords
+# from nltk.tokenize import word_tokenize
+# import nltk
 import re
 import string
 
