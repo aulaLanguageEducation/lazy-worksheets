@@ -1,6 +1,6 @@
 import random
 import spacy
-import utils
+from src import utils
 
 class GapFinder:
 

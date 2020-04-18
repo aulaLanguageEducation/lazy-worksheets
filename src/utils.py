@@ -1,8 +1,8 @@
-ufrom bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 import requests
-# from nltk.corpus import stopwords
-# from nltk.tokenize import word_tokenize
-# import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import nltk
 import re
 import string
 
@@ -63,9 +63,13 @@ def preprocess_text(input_text: str) -> str:
     processed_text = re.sub(r'\d +', '', processed_text)
 
     # remove punctuation
-    processed_text = processed_text.translate(string.maketrans("", ""), string.punctuation)
+    #processed_text = processed_text.translate(string.maketrans("", ""), string.punctuation)
 
     # remove stopwords
     stop_words = set(stopwords.words('english'))
     tokens = word_tokenize(processed_text)
-    processed_text = [i for i in tokens if i not in stop_words]
+    filtered_word_list = [i for i in tokens if i not in stop_words]
+
+    filtered_words_str = ' '.join(filtered_word_list)
+
+    return filtered_words_str
