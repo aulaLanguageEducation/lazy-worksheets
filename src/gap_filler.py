@@ -28,6 +28,8 @@ class GapFinder:
                     txt = txt.replace(token.text, "_______________", 1)
                     list_of_words.append(token.text)
 
+        print("\n--------> GAP FILLER <--------")
+
         print("\nRead the first few sentences of the text. What is the general topic of the article?\n")
 
         print(txt)
@@ -61,7 +63,7 @@ class GapFinder:
         for token in doc:
             if token.tag_ in tags_of_interest:
                 if random.randrange(1,100) <= removal_proportion:
-                    text_with_gaps.append(f'({question_counter}) _______________')
+                    text_with_gaps.append(f'({question_counter}) _______________ ')
                     list_of_words.append(token.text)
                     question_counter +=1
                 else:
@@ -95,7 +97,9 @@ class GapFinder:
                     pass
             else:
                 pass
-    
+
+        print("\n--------> MULTIPLE CHOICE GAP FILLER <--------")
+
         print("\nRead the first few sentences of the text. What is the general topic of the article?\n")
     
         print(" ".join(text_with_gaps))
@@ -169,13 +173,15 @@ class GapFinder:
         for token in doc:
             if token.tag_ in tags_of_interest:
                 if random.randrange(1,100) <= removal_proportion:
-                    text_with_gaps.append(f'({question_counter}) ______________')
+                    text_with_gaps.append(f'({question_counter})______________')
                     list_of_words.append(token.text)
                     question_counter +=1
                 else:
                     text_with_gaps.append(token.text)                  
             else:
                 text_with_gaps.append(token.text)
+
+        print("\n--------> FUNCTION WORD GAP FILLER <--------")
 
         print("\nRead the first few sentences of the text. What is the general topic of the article?\n")
     
@@ -190,11 +196,71 @@ class GapFinder:
         for x in list_of_words:
             print(f'({answer_key_counter})', x, '\n', )
             answer_key_counter +=1
+
             
             
-            
-            
-            
+    def skim_reader(self, txt):
+
+        doc = self.nlp(txt)
+
+        text_with_gaps = []
+
+        for token in doc:
+            if token.is_stop == False:
+                text_with_gaps.append(token.text)
+            else:
+                text_with_gaps.append("_" * len(token.text))
+
+        print("\n--------> SKIM READER <--------")
+
+        print("\nPractise your skim reading. Read the below text - some words have been removed! What is the general topic of the article?\n")
+
+        print(" ".join(text_with_gaps))
+
+        print("\n")
+
+
+
+    def lemmatizer(self, txt):
+
+        doc = self.nlp(txt)
+
+        text_with_gaps = []
+
+        answer_key = []
+
+        tags_of_interest = {"VBD",
+                            "VBG",
+                            "VBN",
+                            "VBP",
+                            "VBZ"}
+
+        question_counter = 1
+
+        for token in doc:
+            if token.tag_ in tags_of_interest:
+                answer_key.append(token.text)
+                text_with_gaps.append(f"({question_counter}) _______________")
+                text_with_gaps.append("( ")
+                text_with_gaps.append(token.lemma_)
+                text_with_gaps.append(" )")
+                question_counter += 1
+            else:
+                text_with_gaps.append(token.text)
+
+        print("\n--------> VERB LEMMATIZER <--------")
+
+        print("\nRead the below text and fill each gap with the correct form of the verb in brackets.\n")
+
+        print(" ".join(text_with_gaps))
+
+        answer_key_number = 1
+
+        print("\nAnswer key:\n")
+
+        for x in answer_key:
+            print(f"{answer_key_number}", x, "\n")
+            answer_key_number +=1
             
             
 
@@ -206,6 +272,11 @@ def main():
     text_output = utils.get_body(TEST_URL_GUARDIAN)
 
     this_gap_finder = GapFinder()
+
+    this_gap_finder.find_gaps(text_output)
+
+    print("------------------------------------------------------------------")
+    print(" ")
     
     this_gap_finder.multiple_choice_gapfiller(text_output)
     
@@ -217,7 +288,12 @@ def main():
     print("------------------------------------------------------------------")
     print(" ")
 
-    this_gap_finder.find_gaps(text_output)
+    this_gap_finder.skim_reader(text_output)
+
+    print("------------------------------------------------------------------")
+    print(" ")
+
+    this_gap_finder.lemmatizer(text_output)
 
     print('\nThis news article can be found via the below link:\n\n', TEST_URL_GUARDIAN)
 
