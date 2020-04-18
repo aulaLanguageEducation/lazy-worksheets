@@ -1,4 +1,4 @@
-ufrom bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 import requests
 # from nltk.corpus import stopwords
 # from nltk.tokenize import word_tokenize
