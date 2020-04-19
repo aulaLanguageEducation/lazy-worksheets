@@ -1,2 +1,6 @@
 Good number of NLP python functions with examples:
 https://medium.com/@datamonsters/text-preprocessing-in-python-steps-tools-and-examples-bf025f872908
+
+pdf related stuff
+https://pyfpdf.readthedocs.io/en/latest/
+https://www.blog.pythonlibrary.org/2018/06/05/creating-pdfs-with-pyfpdf-and-python/
