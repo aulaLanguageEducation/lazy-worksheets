@@ -41,43 +41,45 @@ class Manipulator:
      #return sentences_list
 
     def reorder_sentences(self, sentences_list):
+        # the below function takes a random sentence in a paragraph and replaces it a random different point
 
-        import random
+        # the line below finds the length of the paragraph
+        length_of_paragraph = len(sentences_list)
 
-        paragraph_list = list(sentences_list)
-        print(paragraph_list)
+        # the line below creates a copy of the original list of text
+        copy_sentences_list = sentences_list.copy()
 
-        a = len(paragraph_list)
-        print(a)
+        # the below takes a sentence from the length of the paragraph list
+        rand_idx = random.randrange(length_of_paragraph)
+        random_sentence = sentences_list[rand_idx]
 
-        copy_paragraph_list = paragraph_list.copy()
+        # the line below takes random sentence and indexes it to show the position of the random sentence was within the paragraph, it calls this variable 'index_random_sentence'
+        index_random_sentence = sentences_list.index(random_sentence)
 
-        rand_idx = random.randrange(len(paragraph_list))
-        random_num = paragraph_list[rand_idx]
-        x = random_num
-        print(x)
+        # the line below takes the copy of the original paragraph and removes the random sentence, creating a new shorter list
+        copy_sentences_list.remove(random_sentence)
 
-        y = paragraph_list.index(x)
-        print(y)
+        # the below is creating a copy of the index ot the random sentence and calling it 'copy_index_random_sentence'
+        copy_index_random_sentence = index_random_sentence
 
-        copy_paragraph_list.remove(x)
-        print(copy_paragraph_list)
+        # the below then ensures the new copy of the index of the random sentence is a different number to the old index (limited to the size of the paragraph)
+        while copy_index_random_sentence == index_random_sentence:
+            copy_index_random_sentence = random.randrange(length_of_paragraph)
 
-        rand_idx = random.randrange(len(paragraph_list))
-        new_random_num = paragraph_list[rand_idx]
+        # the below creates a new list which takes the paragraph with the sentence removed, then inserts the random sentence at a random place (not in it's original position)
+        jumbled_sentences_list = copy_sentences_list
+        jumbled_sentences_list.insert(copy_index_random_sentence,random_sentence)
+        print(jumbled_sentences_list)
 
-        z = new_random_num
-        b =new_random_num.index(z)
-        print(b)
-        while b == y:
-            b = random.randrange(len(paragraph_list))
-        print(b)
-
-        jumbled_paragraph_list = copy_paragraph_list
-        jumbled_paragraph_list.insert(b,x)
-        print(jumbled_paragraph_list)
-
-
+        # the below gives the answers
+        print("--------------------------------------------------------------------------------------------------")
+        print("ANSWERS")
+        print("The sentence in the incorrect place was:")
+        print(random_sentence)
+        print("This should have been sentence number:")
+        print(index_random_sentence+1)
+        print("The paragraph reads:")
+        print(sentences_list)
 
 
 
