@@ -11,13 +11,17 @@ class PdfYeah:
         else:
             output_directory = ''
 
-        self.filename = output_directorypdf_name
+        self.filename = output_directory + pdf_name
 
 
         if font_dict is None:
             self.document.set_font('Arial', size=12)
         else:
             self.document.set_font(font_dict['font'], size=font_dict['size'])
-document.cell(w=0, txt="hello world")
-document.output("hello_world.pdf")
-self.document.add_page()
+
+    def add_page(self, text_to_add):
+        self.document.cell(w=0, txt=text_to_add)
+        self.document.add_page()
+
+    def save_pdf(self):
+        self.document.output(self.filename)
