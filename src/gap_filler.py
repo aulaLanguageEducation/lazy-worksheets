@@ -1,45 +1,65 @@
+import math
 import random
 import spacy
 from src import utils
+
 
 class GapFinder:
 
     def __init__(self):
         self.nlp = spacy.load('en_core_web_sm')
 
+
     
-    
-    def find_gaps(self, txt, removal_proportion=7, random_seed=3142):
+    def find_gaps(self, txt, removal_proportion=7, random_seed=None):
 
         doc = self.nlp(txt)
 
-        random.seed(random_seed)
+        if random_seed is not None:
+            random.seed(random_seed)
+
+        text_with_gaps = []
 
         tags_of_interest = {"NN",
                             "NNS",
                             "JJ",
                             "JJR",
                             "JJS"}
+
+        # This is the list of words which have been removed
         list_of_words = []
+
+        # This is the total number of words in the document whose token.tag_ is in tags_of_interest
+        target_words = 0
 
         for token in doc:
             if token.tag_ in tags_of_interest:
-                if random.randrange(1, 100) <= removal_proportion:
-                    txt = txt.replace(token.text, "_______________", 1)
+                target_words +=1
+
+        for token in doc:
+            if token.tag_ in tags_of_interest:
+                if random.randrange(0, target_words) <= math.ceil((target_words/100)*removal_proportion):
+                    text_with_gaps.append("_______________")
                     list_of_words.append(token.text)
+                else:
+                    text_with_gaps.append(token.text)
+            else:
+                text_with_gaps.append(token.text)
 
         print("\n--------> GAP FILLER <--------")
 
         print("\nRead the first few sentences of the text. What is the general topic of the article?\n")
 
-        print(txt)
+        print(" ".join(text_with_gaps))
 
         print("\nCan you fill the gaps in the text with the below ", (len(list_of_words)), " words? \n")
 
         list_of_words.sort(key=str.lower)
 
-        for x in list_of_words:
-            print(x, '\n')
+        for word in list_of_words:
+            print(word, '\n')
+
+        return text_with_gaps, list_of_words
             
       
         
@@ -55,7 +75,8 @@ class GapFinder:
         tags_of_interest = {"NN",
                             "NNS",
                             "JJ"}
-    
+
+        # This is the list of words which have been removed
         list_of_words = []
         
         question_counter = 1
@@ -140,8 +161,8 @@ class GapFinder:
         
         print('\nAnswer key:\n')
    
-        for x in list_of_words:
-            print(f'({answer_key_counter})', x, '\n', )
+        for word in list_of_words:
+            print(f'({answer_key_counter})', word, '\n', )
             answer_key_counter +=1
             
 
@@ -156,10 +177,6 @@ class GapFinder:
         doc = self.nlp(txt)
      
         text_with_gaps = []
-     
-        list_of_words = []
-    
-        question_counter = 1
         
         tags_of_interest = {"EX",
                             "IN",
@@ -169,6 +186,11 @@ class GapFinder:
                             "WDT",
                             "WP",
                             "WP$"}
+
+        # This is the list of words which have been removed
+        list_of_words = []
+
+        question_counter = 1
 
         for token in doc:
             if token.tag_ in tags_of_interest:
@@ -193,8 +215,8 @@ class GapFinder:
     
         print('\nAnswer key:\n')
    
-        for x in list_of_words:
-            print(f'({answer_key_counter})', x, '\n', )
+        for word in list_of_words:
+            print(f'({answer_key_counter})', word, '\n', )
             answer_key_counter +=1
 
             
@@ -227,19 +249,20 @@ class GapFinder:
 
         text_with_gaps = []
 
-        answer_key = []
-
         tags_of_interest = {"VBD",
                             "VBG",
                             "VBN",
                             "VBP",
                             "VBZ"}
 
+        # This is the list of words which have been removed
+        list_of_words = []
+
         question_counter = 1
 
         for token in doc:
             if token.tag_ in tags_of_interest:
-                answer_key.append(token.text)
+                list_of_words.append(token.text)
                 text_with_gaps.append(f"({question_counter}) _______________")
                 text_with_gaps.append("( ")
                 text_with_gaps.append(token.lemma_)
@@ -254,13 +277,13 @@ class GapFinder:
 
         print(" ".join(text_with_gaps))
 
-        answer_key_number = 1
+        answer_key_counter = 1
 
         print("\nAnswer key:\n")
 
-        for x in answer_key:
-            print(f"{answer_key_number}", x, "\n")
-            answer_key_number +=1
+        for word in list_of_words:
+            print(f"{answer_key_counter}", word, "\n")
+            answer_key_counter +=1
             
             
 
