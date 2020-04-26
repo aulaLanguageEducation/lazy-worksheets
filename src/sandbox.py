@@ -1,7 +1,9 @@
-import nltk
 
-import os
+class TestClass:
+    def method_1(self):
+        self.attribute_1 = 'heello'
 
-path_and_file = 'D:/Git_in_D/Language_Parent/lazy-worksheets'
+    def method_2(self):
+        self.attribute_2 = 'world'
 
-path, file = os.listdir(path_and_file)
+temp = TestClass()
