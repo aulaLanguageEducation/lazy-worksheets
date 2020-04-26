@@ -9,6 +9,7 @@ __pycache__/
 # alex's play area
 *src/pdf_example.py
 *src/sandbox.py
+*.pdf
 
 # images
 images/*
