@@ -18,14 +18,34 @@ class TestPipeline(TestCase):
 
         random_seed_test = 2453
 
-        input_data = 'this is a string with the noun dog'
+        input_data = 'This is a string with the noun dog'
 
         this_gapfiller = gap_filler.GapFinder()
 
         actual_output_text, actual_output_listofwords = this_gapfiller.find_gaps(input_data, random_seed=random_seed_test)
 
-        expected_output = 'this is a string with the noun _______________'
+        expected_output = 'This is a string with the noun _______________'
 
         self.assertEqual(expected_output, actual_output_text)
+
+
+    def test_multiple_choice_gapfiller(self):
+
+        random_seed_test = 1234
+
+        input_data = 'This is a string with the adjective happy'
+
+        this_gapfiller = gap_filler.GapFinder()
+
+        actual_output_text, actual_output_listofwords = this_gapfiller.find_gaps(input_data, random_seed=random_seed_test)
+
+        expected_output = 'This is a string with the adjective _______________'
+
+        self.assertEqual()
+
+
+
+
+
 
 

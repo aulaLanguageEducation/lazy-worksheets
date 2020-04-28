@@ -1,4 +1,4 @@
-import math
+import math as maths
 import random
 import spacy
 from src import utils
@@ -10,7 +10,8 @@ class GapFinder:
         self.nlp = spacy.load('en_core_web_sm')
 
 
-    
+
+
     def find_gaps(self, txt, removal_proportion=7, random_seed=None):
 
         doc = self.nlp(txt)
@@ -32,21 +33,58 @@ class GapFinder:
         # This is the total number of words in the document whose token.tag_ is in tags_of_interest
         target_words = 0
 
+        # Using the 'balls in a bag' analogy, this list represents those balls on which is written the word "remove"
+        remove_words_list = []
+
+        # Using the 'balls in a bag' analogy, this list represents those balls on which is written the word "leave"
+        leave_words_list = []
+
+
         for token in doc:
             if token.tag_ in tags_of_interest:
                 target_words +=1
 
+        # Please note, the removal_proportion parameter is currently redundant. In this example, the removal...
+        # ...proportion is 10% and has been entered manually as a decimal (0.1) as seen at the end of...
+        # ...line 50, below. This can of course be changed if this system is workable.
+        for i in range(maths.ceil(target_words * 0.1)):
+            remove_words_list.append("remove")
+
+        for i in range(target_words - len(remove_words_list)):
+            leave_words_list.append("leave")
+
+        # Using the 'balls in a bag' analogy, this list called 'decider' is the bag.
+        decider = remove_words_list + leave_words_list
+
         for token in doc:
             if token.tag_ in tags_of_interest:
-                if random.randrange(0, target_words) <= math.ceil((target_words/100)*removal_proportion):
-                    text_with_gaps.append("_______________")
-                    list_of_words.append(token.text)
-                else:
-                    text_with_gaps.append(token.text)
+                for ball_from_bag in random.sample(decider, 1):
+                    if ball_from_bag == "remove":
+                        text_with_gaps.append("_______________")
+                        list_of_words.append(token.text)
+                        decider.remove("remove")
+                    elif ball_from_bag == "leave":
+                        text_with_gaps.append(token.text)
+                        decider.remove("leave")
             else:
                 text_with_gaps.append(token.text)
 
-        print("\n--------> GAP FILLER <--------")
+        print("\n--------> GAP FILLER <--------\n")
+
+        # The below stats are only included for ease of reviewing, during manual testing.
+        print("--------------------Useful stats below:--------------------")
+
+        print("The total number of target words is ", target_words)
+
+        print("The number of target words to remove is ", len(remove_words_list))
+
+        print("The number of target words to leave is ", len(leave_words_list))
+
+        print("The length of the decider list after running the code is: ", len(decider))
+
+        print("*Please note, the length of the decider list after running the code should be ZERO.*")
+
+        print("-----------------------------------------------------------")
 
         print("\nRead the first few sentences of the text. What is the general topic of the article?\n")
 
