@@ -1,9 +1,22 @@
+import random
+import spacy
+from src import utils
 
-class TestClass:
-    def method_1(self):
-        self.attribute_1 = 'heello'
+def main():
+    TEST_URL = 'https://www.bbc.co.uk/news/uk-50929543'
+    TEST_URL_GUARDIAN = 'https://www.theguardian.com/uk-news/2019/dec/28/government-exposes-addresses-of-new-year-honours-recipients'
 
-    def method_2(self):
-        self.attribute_2 = 'world'
+    text_output = utils.get_body(TEST_URL_GUARDIAN)
 
-temp = TestClass()
+    for this_letter in text_output:
+        try:
+            this_letter.encode('latin-1')
+        except UnicodeEncodeError:
+            print('--', this_letter)
+
+
+    return text_output
+
+if __name__ == "__main__":
+    text_output = main()
+
