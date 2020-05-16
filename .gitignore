@@ -7,12 +7,8 @@ __pycache__/
 *.idea/
 
 # alex's play area
-*src/pdf_example.py
-*src/sandbox.py
-*.pdf
 
-# images
-images/*
+src/sandbox.py
 
 # C extensions
 *.so
