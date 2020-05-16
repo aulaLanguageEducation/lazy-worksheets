@@ -6,15 +6,14 @@ __pycache__/
 # fucking intelij
 *.idea/
 
-<<<<<<< Updated upstream
-=======
 # alex's play area
-src/sandbox.py
+*src/pdf_example.py
+*src/sandbox.py
+*.pdf
 
 # images
 images/*
 
->>>>>>> Stashed changes
 # C extensions
 *.so
 

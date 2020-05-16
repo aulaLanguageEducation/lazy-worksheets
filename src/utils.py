@@ -5,6 +5,7 @@ from nltk.tokenize import word_tokenize
 import nltk
 import re
 import string
+from src import encoding_mappings
 
 
 def get_body(url: str) -> str:
@@ -24,6 +25,8 @@ def get_body(url: str) -> str:
     # Query the URL and pulling data out of HTML
     soup = BeautifulSoup(response.content, "html.parser")
 
+    encoding_mapper = encoding_mappings.EncodingMapper()
+
     if 'bbc.co.uk' in url:
         pass
     elif 'theguardian.com' in url:
@@ -35,9 +38,10 @@ def get_body(url: str) -> str:
         content_list = article_content.find_all('p')
 
         # get the text content
-        text_list = [item.get_text() for item in content_list]
+        text_list = [item.string for item in content_list if item.string is not None]
 
         output = ''.join(text_list)
+        output = encoding_mapper.map(output)
 
     else:
         raise ValueError
