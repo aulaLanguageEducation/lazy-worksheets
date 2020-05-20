@@ -8,7 +8,7 @@ __pycache__/
 
 # alex's play area
 
-src/sandbox.py
+src/find_web_errors.py
 
 # C extensions
 *.so

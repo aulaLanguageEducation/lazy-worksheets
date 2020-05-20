@@ -1,7 +1,7 @@
 from fpdf import FPDF
 from typing import Union
-from gap_finder_temp import GapFinder
-import utils
+from src.gap_filler import GapFinder
+from src import utils
 
 class PdfException(Exception):
     """
@@ -90,7 +90,7 @@ class PdfYeah:
             raise PageException('TODO - handle lists')
 
         self.document.multi_cell(w=0, h=5, txt=str(text_to_add))
-        print('self.document.get_y() = ', self.document.get_y())
+        #print('self.document.get_y() = ', self.document.get_y())
         self.document.ln()
         self.document.cell(w=0, h=30, align='C', txt='')
         self.document.ln()
@@ -106,8 +106,7 @@ class PdfYeah:
 
 if __name__ == "__main__":
 
-    this_pdf = PdfYeah('test.pdf')
-    this_pdf.add_title('Lazy Title')
+
 
 
     TEST_URL_GUARDIAN = 'https://www.theguardian.com/uk-news/2019/dec/28/government-exposes-addresses-of-new-year-honours-recipients'
@@ -116,10 +115,15 @@ if __name__ == "__main__":
 
     this_gap_finder = GapFinder()
 
-    article, list_of_missing = this_gap_finder.find_gaps(text_output)
+    gap_filler_output = this_gap_finder.find_gaps(text_output)
 
-    this_pdf.add_text_to_page(article)
+    this_pdf = PdfYeah('test.pdf')
+    this_pdf.add_title(gap_filler_output['title'])
+    this_pdf.add_text_to_page(gap_filler_output['instructions'])
+    this_pdf.add_text_to_page(gap_filler_output['main_text_final'])
     this_pdf.add_page()
-    this_pdf.add_text_to_page(list_of_missing)
+    this_pdf.add_text_to_page(gap_filler_output['removed_words_final'])
+
+
 
     this_pdf.save_pdf()
