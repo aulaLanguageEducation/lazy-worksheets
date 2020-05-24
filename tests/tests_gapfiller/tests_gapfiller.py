@@ -14,12 +14,12 @@ class TestPipeline(TestCase):
 
         this_gapfiller = gap_filler.GapFinder()
 
-        _, actual_output_text, _, _, _, _ = this_gapfiller.find_gaps(input_data)
+        output_dict_actual = this_gapfiller.find_gaps(input_data)
 
         # N.B. the inserted gaps consist of 15 underscores
         expected_output = 'This is a (1) _______________'
 
-        self.assertEqual(expected_output, actual_output_text)
+        self.assertEqual(expected_output, output_dict_actual['main_text_final'])
 
     def test_multiple_choice_gapfiller__text(self, random_seed=1234):
 

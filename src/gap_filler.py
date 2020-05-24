@@ -2,6 +2,9 @@ import math as maths
 import random
 import spacy
 from src import utils
+import logging as logger
+
+logger.basicConfig(level=logger.INFO)
 
 
 class GapFinderException(Exception):
@@ -15,7 +18,7 @@ class GapFinder:
     def __init__(self):
         self.nlp = spacy.load('en_core_web_sm')
 
-    def decider_bag(self, txt, target_tags=None, removal_proportion=0):
+    def decider_bag(self, txt: str, target_tags=None, removal_proportion=0) -> list:
         """This method is used to create a virtual 'bag of balls'
         which can be called in order to randomly select an exact proportion of target
         words to be removed from a text."""
@@ -52,9 +55,7 @@ class GapFinder:
 
         return remove_words_list + leave_words_list
 
-
-
-    def find_gaps(self, txt, random_seed=None):
+    def find_gaps(self, txt: str, random_seed=None) -> dict:
         """This method removes words from a text and provides them in a list
         for the learner to replace. The learner must fill each gap in the text
         with the correct word."""
@@ -97,8 +98,10 @@ class GapFinder:
             else:
                 text_with_gaps.append(token.text)
 
-        title_and_instructions = '\n--------> GAP FILLER <--------\n\nRead the below text. Can you fill the gaps with ' \
-                                 'the words in the list below?\n'
+        title = 'Gap Filler!'
+
+        instructions = '\nRead the below text. Can you fill the gaps with ' \
+                       'the words in the list below?\n'
 
         question_title = '\nThe removed words are below: \n'
 
@@ -132,23 +135,34 @@ class GapFinder:
             answers.append('\n')
             answer_key_counter += 1
 
+        main_text_final = " ".join(text_with_gaps)
+        removed_words_final = "".join(removed_words)
+        answers_final = "".join(answers)
+
         # TODO remove all print statements when code is ready for website. They appear grouped together in
         #  each method, as per below
-        print(title_and_instructions)
+        logger.info(title)
+        logger.info(instructions)
 
-        print(" ".join(text_with_gaps))
+        logger.info(main_text_final)
 
-        print(question_title)
+        logger.info(question_title)
 
-        print("".join(removed_words))
+        logger.info(removed_words_final)
 
-        print(answer_title)
+        logger.info(answer_title)
 
-        print("".join(answers))
+        logger.info(answers_final)
 
-        return title_and_instructions, " ".join(text_with_gaps), question_title, "".join(removed_words), answer_title, "".join(answers)
+        output_dict = {'title': title,
+                       'instructions': instructions,
+                       'main_text_final': main_text_final,
+                       'question_title': question_title,
+                       'removed_words_final': removed_words_final,
+                       'answer_title': answer_title,
+                       'answers_final': answers_final}
 
-
+        return output_dict
 
     def multiple_choice_gapfiller(self, txt, random_seed=None):
         """This method removes words from a text and provides a series of
@@ -311,9 +325,8 @@ class GapFinder:
 
         print("".join(answers))
 
-        return title_and_instructions, " ".join(text_with_gaps), question_title, "".join(questions), answer_title, "".join(answers)
-
-
+        return title_and_instructions, " ".join(text_with_gaps), question_title, "".join(
+            questions), answer_title, "".join(answers)
 
     def function_word_filler(self, txt, random_seed=None):
         """This method removes function words from a text for the learner to replace."""
@@ -380,8 +393,6 @@ class GapFinder:
 
         return title_and_instructions, " ".join(text_with_gaps), answer_title, "".join(answers)
 
-
-
     def skim_reader(self, txt, random_seed=None):
         """This method removes all but main content words from a text and replaces all
         other words with 'XXXXX'. This is designed to help learners practise skim-reading,
@@ -412,8 +423,6 @@ class GapFinder:
         print(answer_title)
 
         return title_and_instructions, " ".join(text_with_gaps), answer_title
-
-
 
     def lemmatizer(self, txt, random_seed=None):
         """This method removes verbs from a text and prints the bare infinitive form in brackets
@@ -480,7 +489,6 @@ class GapFinder:
         print("".join(answers))
 
         return title_and_instructions, " ".join(text_with_gaps), answer_title, "".join(answers)
-
 
 
 def main():
