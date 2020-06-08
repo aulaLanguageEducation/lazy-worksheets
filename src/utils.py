@@ -27,9 +27,7 @@ def get_body(url: str) -> str:
 
     encoding_mapper = encoding_mappings.EncodingMapper()
 
-    if 'bbc.co.uk' in url:
-        pass
-    elif 'theguardian.com' in url:
+    if 'theguardian.com' in url:
 
         # get content of article (as html tag)
         article_content = soup.find(class_="content__article-body from-content-api js-article__body")
@@ -42,7 +40,123 @@ def get_body(url: str) -> str:
 
         output = ''.join(text_list)
         output = encoding_mapper.map(output)
+    elif 'bbc.co.uk' in url:
 
+        # get content of article (as html tag)
+        article_content = soup.find(class_="story-body__inner")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'nytimes.com' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="class=meteredContent css-1r7ky0e")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'news.sky.com' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="sdc-site-layout-wrap site-wrap site-wrap-padding")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'metro.co.uk' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="article-body")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'huffingtonpost.co.uk' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="entry__content-list js-entry-content")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'inews.co.uk' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="sc-hAnkBK hHEGbG")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'telegraph.co.uk' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="articleBodyText section")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'mirror.co.uk' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="article-page news sticky-header stick-sharebar")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
+    elif 'independent.co.uk' in url:
+
+        # get content of article (as html tag)
+        article_content = soup.find(class_="article-type-article amp-mode-mouse wrapped_by_ads takeover-loaded")
+
+        # find the paragraph tags in the content element
+        content_list = article_content.find_all('p')
+
+        # get the text content
+        text_list = [item.string for item in content_list if item.string is not None]
+
+        output = ''.join(text_list)
+        output = encoding_mapper.map(output)
     else:
         raise ValueError
 
