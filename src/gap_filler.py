@@ -492,7 +492,6 @@ class GapFinder:
 
 
 def main():
-    TEST_URL = 'https://www.bbc.co.uk/news/uk-50929543'
     TEST_URL_GUARDIAN = 'https://www.theguardian.com/uk-news/2019/dec/28/government-exposes-addresses-of-new-year-honours-recipients'
 
     text_output = utils.get_body(TEST_URL_GUARDIAN)
