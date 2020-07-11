@@ -116,7 +116,7 @@ if __name__ == "__main__":
     MIRROR_NEWS = 'https://www.mirror.co.uk/3am/celebrity-news/former-coronation-street-star-katie-22149444'
     INDY_NEWS = 'https://www.independent.co.uk/sport/football/premier-league/newcastle-takeover-saudi-arabia-letter-government-sportswashing-epl-a9552236.html'
 
-    text_output = utils.get_body(INDY_NEWS)
+    text_output = utils.get_body(TEST_URL_GUARDIAN)
 
     this_gap_finder = GapFinder()
 
