@@ -14,6 +14,17 @@ class UrlException(Exception):
     pass
 
 
+class UrlError(UrlException):
+    """
+    Attributes:
+        expression -- input expression in which the error occurred
+        message -- explanation of the error
+    """
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
+
+
 def get_body(url: str, random_seed: float = None) -> str:
     """
     This function gets the main body of a news page
@@ -55,6 +66,8 @@ def get_body(url: str, random_seed: float = None) -> str:
 
     encoding_mapper = encoding_mappings.EncodingMapper()
 
+    site_found = False
+
     # List of URLs for news sites with their respective 'main body of text' HTML tags
     news_sites = {
 
@@ -71,21 +84,26 @@ def get_body(url: str, random_seed: float = None) -> str:
 
     }
 
-    for key in news_sites:
-        if key in url:
-            # get content of article (as html tag)
-            article_content = soup.find(class_=(news_sites[key]))
+    if site_found is False:
+        for key in news_sites:
+            if key in url:
+                # get content of article (as html tag)
+                article_content = soup.find(class_=(news_sites[key]))
 
-            # find the paragraph tags in the content element
-            content_list = article_content.find_all('p')
+                # find the paragraph tags in the content element
+                content_list = article_content.find_all('p')
 
-            # get the text content
-            text_list = [item.string for item in content_list if item.string is not None]
+                # get the text content
+                text_list = [item.string for item in content_list if item.string is not None]
 
-            output = ''.join(text_list)
-            output = encoding_mapper.map(output)
+                output = ''.join(text_list)
+                output = encoding_mapper.map(output)
 
-            return output
+                site_found is True
+
+                return output
+            else:
+                raise UrlError(url, "Sorry, this website is not supported by Lazy Worksheets.")
 
 def preprocess_text(input_text: str) -> str:
     """
