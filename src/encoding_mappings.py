@@ -6,7 +6,8 @@ class EncodingMapper:
                         '–': '-',
                         '’': "'",
                         '“': '"',
-                        '‘': "'"}
+                        '‘': "'",
+                        '—': '-'}
     def map(self, input_text: str) -> str:
 
         for key, value in self.mapping.items():

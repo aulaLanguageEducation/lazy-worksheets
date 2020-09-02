@@ -115,8 +115,10 @@ if __name__ == "__main__":
     TELEGRAPH_NEWS = 'https://www.telegraph.co.uk/technology/2020/06/03/can-anyone-stop-zoom-boom/'
     MIRROR_NEWS = 'https://www.mirror.co.uk/3am/celebrity-news/former-coronation-street-star-katie-22149444'
     INDY_NEWS = 'https://www.independent.co.uk/sport/football/premier-league/newcastle-takeover-saudi-arabia-letter-government-sportswashing-epl-a9552236.html'
+    """The below link to a page on El Pais is not supported at present"""
+    EL_PAIS = 'https://english.elpais.com/society/2020-08-07/coronavirus-crisis-in-spain-up-to-580-outbreaks-with-6900-related-cases.html'
 
-    text_output = utils.get_body(INDY_NEWS)
+    text_output = utils.get_body(EL_PAIS)
 
     this_gap_finder = GapFinder()
 
