@@ -50,6 +50,40 @@ def get_domain(url: str) -> str:
     return None
 
 
+def find_article_parent_class(my_soup):
+
+    all_p_tags = my_soup.find_all('p')
+
+    parent_class_dict = {}
+
+    for i_tag in all_p_tags:
+        next_parent = True
+        while_count = 0
+        parent_tag = i_tag.parent
+        while next_parent and while_count < 10:
+            while_count += 1
+            try:
+                current_class = parent_tag['class']
+                next_parent = False
+            except KeyError:
+                parent_tag = parent_tag.parent
+
+        try:
+            parent_class_dict[str(current_class)] += 1
+        except KeyError:
+            parent_class_dict[str(current_class)] = 1
+
+   # the 5 here sets a minimum value of the number of p tags required to declare article content parent tag
+    current_most_p_tags = 5
+    article_parent_tag = ''
+    for k, v in parent_class_dict.items():
+        if v > current_most_p_tags:
+            current_most_p_tags = v
+            article_parent_tag = k
+
+    return my_soup.find(class_=' '.join(article_parent_tag))
+
+
 def get_body(url: str, random_seed: float = None) -> str:
     """
     This function gets the main body of a news page
@@ -72,7 +106,7 @@ def get_body(url: str, random_seed: float = None) -> str:
                "euconsent": "BO0mZ6uuXwO0mZYIAAAAAADM-AAAAv57_______9______9uz_Ov_v_f__33e8__9v_l_7_-___u_-23d4u_1vfu6d99yfm1-7etr3tp_87ues2_Xur__71__3z3_9pxP79r7335Ew_v-_v-b7BCPN9Y3v-8K94A",
                "gdpr": "consented", "m2_aheight": "1040", "m2_analytics": "enabled", "m2_awidth": "1920",
                "m2_bot_model": "1", "m2_bot_percent": "0", "m2_bot_reason": "lnb", "m2_click": "1", "m2_height": "1080",
-               "m2_ip": "77.100.9.248", "m2_keypress": "0", "m2_last_unload": "22070", "m2_mouse_move": "169",
+               "m2_ip": "77.10.9.248", "m2_keypress": "0", "m2_last_unload": "22070", "m2_mouse_move": "169",
                "m2_quick_check": "true", "m2_scroll": "0", "m2_touch_move": "0", "m2_touch_start": "0",
                "m2_ua": "Mozilla/5.0 (Windows NT 10.0 Win64 x64 rv:76.0) Gecko/20100101 Firefox/76.0",
                "m2_width": "1920", "mm2_cookieA": "374835295-58d7-4b9f-9374-b9682949d071", "pg_tc": "sample",
@@ -144,16 +178,20 @@ def get_body(url: str, random_seed: float = None) -> str:
     print(response.text)
     """
 
+
     # get content of article (as html tag)
     article_content = soup.find(class_=ACCEPTED_NEW_SITES[site_domain])
 
+    if article_content is None:
+        article_content = find_article_parent_class(soup)
 
+    if article_content is None:
+        article_content = find_article_parent_class(soup)
+        raise UrlException(url, " Sorry, we not able to down load this content at the moment.")
 
-    # find the paragraph tags in the content element
-    content_list = article_content.find_all('p')
 
     # get the text content
-    text_list = [item.string for item in content_list if item.string is not None]
+    text_list = [item.string for item in article_content if item.string is not None]
 
     output_dirty = ''.join(text_list)
     return encoding_mapper.map(output_dirty)
