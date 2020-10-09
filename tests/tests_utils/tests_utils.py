@@ -2,6 +2,9 @@ from unittest import TestCase
 from unittest.mock import patch
 import random
 from src import utils
+import os
+
+utils_test_folder_name = 'tests_utils'
 
 
 class TestPipeline(TestCase):
@@ -11,10 +14,17 @@ class TestPipeline(TestCase):
 
         actual_output = utils.get_body(TEST_URL_GUARDIAN)
 
-        with open("guardian_expected_output.txt", "r") as file:
+        if utils_test_folder_name in os.getcwd():
+            test_file_dir = os.getcwd()
+        else:
+            test_file_dir = os.path.join(os.getcwd(), utils_test_folder_name)
+
+
+        with open(os.path.join(test_file_dir, 'guardian_expected_output.txt'), "r") as file:
             expected_output = file.read()
 
         self.assertEqual(expected_output, actual_output)
+
 
     def test_get_body_raises_error(self, random_seed=1235):
 
@@ -126,7 +136,7 @@ class TestPipeline(TestCase):
             with self.subTest():
                 self.assertEqual(website, utils.get_domain(url))
 
-    def test_supported_new_site_check(self):
+    def test_supported_news_site_check(self):
 
         test_cases = [
             ('http://huffingtonpost.co.uk.somthing.bad/', True),
@@ -143,6 +153,6 @@ class TestPipeline(TestCase):
 
         for url, website in test_cases:
             with self.subTest():
-                self.assertEqual(website, utils.supported_new_site_check(url))
+                self.assertEqual(website, utils.supported_news_site_check(url))
 
 

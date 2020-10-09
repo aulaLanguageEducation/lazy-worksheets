@@ -1,5 +1,5 @@
 # List of URLs for news sites with their respective 'main body of text' HTML tags
-ACCEPTED_NEW_SITES = {
+ACCEPTED_NEWS_SITES = {
 
 
     'theguardian.com': 'article-body-commercial-selector',
