@@ -171,7 +171,7 @@ def get_body(url: str, random_seed: float = None) -> str:
 
     site_domain = get_domain(url)
     if site_domain is None:
-        raise UrlException(" Sorry, something has gone horribly wrong,.")
+        raise UrlException(" Sorry, something has gone horribly wrong.")
 
     # Query the URL and pulling data out of HTML
     soup = BeautifulSoup(response.content, "html.parser")
