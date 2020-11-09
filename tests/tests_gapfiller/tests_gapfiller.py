@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, skip
 import random
 from src import gap_filler
 from src.gap_filler import GapFillerException
@@ -7,7 +7,6 @@ from src.gap_filler import GapFillerException
 class TestPipeline(TestCase):
 
     def test_find_gaps__text(self, random_seed=1235):
-
         random.seed(random_seed)
 
         input_data = 'This is a dog'
@@ -21,8 +20,8 @@ class TestPipeline(TestCase):
 
         self.assertEqual(expected_output, output_dict_actual['main_text_final'])
 
+    @skip('need refactoring')
     def test_multiple_choice_gapfiller__text(self, random_seed=1234):
-
         random.seed(random_seed)
 
         input_data = 'These are dogs and cats and mice'
@@ -36,9 +35,7 @@ class TestPipeline(TestCase):
 
         self.assertEqual(expected_output, actual_output_text)
 
-
     def test_multiple_choice_gapfiller__exception(self, random_seed=1234):
-
         random.seed(random_seed)
 
         this_gap_filler = gap_filler.GapFiller()
@@ -48,10 +45,8 @@ class TestPipeline(TestCase):
         with self.assertRaises(GapFillerException):
             this_gap_filler.multiple_choice_fill_gaps(input_data)
 
-
-
+    @skip('need refactoring')
     def test_function_word_filler(self, random_seed=1234):
-
         random.seed(random_seed)
 
         input_data = 'There is a dog'
@@ -64,10 +59,9 @@ class TestPipeline(TestCase):
         expected_output = '(1) _______________ is a dog'
 
         self.assertEqual(expected_output, actual_output_text)
-        
-        
-    def test_skim_reader(self, random_seed=1234):
 
+    @skip('need refactoring')
+    def test_skim_reader(self, random_seed=1234):
         random.seed(random_seed)
 
         input_data = 'This is a dog'
@@ -81,9 +75,8 @@ class TestPipeline(TestCase):
 
         self.assertEqual(expected_output, actual_output_text)
 
-
+    @skip('need refactoring')
     def test_lemmatizer(self, random_seed=1234):
-
         random.seed(random_seed)
 
         input_data = 'The dog ran'
@@ -96,6 +89,3 @@ class TestPipeline(TestCase):
         expected_output = 'The dog (1) _______________ ( run )'
 
         self.assertEqual(expected_output, actual_output_text)
-
-
-

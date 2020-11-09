@@ -160,7 +160,8 @@ class GapFiller:
                        'question_title': question_title,
                        'removed_words_final': removed_words_final,
                        'answer_title': answer_title,
-                       'answers_final': answers_final}
+                       'answers_final': answers_final,
+                       'exercise_type': 'gap fill worksheet'}
 
         return output_dict
 
@@ -313,6 +314,7 @@ class GapFiller:
             answers.append('\n')
             answer_key_counter += 1
 
+        """
         print(title_and_instructions)
 
         print(" ".join(text_with_gaps))
@@ -324,6 +326,12 @@ class GapFiller:
         print(answer_title)
 
         print("".join(answers))
+        """
+
+        #todo - need to refactor the output to align with fill_gaps
+        raise GapFillerException
+
+
 
         return title_and_instructions, " ".join(text_with_gaps), question_title, "".join(
             questions), answer_title, "".join(answers)
@@ -383,6 +391,7 @@ class GapFiller:
             answers.append('\n')
             answer_key_counter += 1
 
+        """
         print(title_and_instructions)
 
         print(" ".join(text_with_gaps))
@@ -390,6 +399,10 @@ class GapFiller:
         print(answer_title)
 
         print("".join(answers))
+        """
+
+        #todo - need to refactor the output to align with fill_gaps
+        raise GapFillerException
 
         return title_and_instructions, " ".join(text_with_gaps), answer_title, "".join(answers)
 
@@ -416,11 +429,17 @@ class GapFiller:
 
         answer_title = '\nNow talk to a partner and share your ideas about the general topic of the article.\n'
 
+
+        """
         print(title_and_instructions)
 
         print(" ".join(text_with_gaps))
 
         print(answer_title)
+        """
+
+        #todo - need to refactor the output to align with fill_gaps
+        raise GapFillerException
 
         return title_and_instructions, " ".join(text_with_gaps), answer_title
 
@@ -480,14 +499,17 @@ class GapFiller:
             answers.append('\n')
             answer_key_counter += 1
 
-        print(title_and_instructions)
+        """      print(title_and_instructions)
 
         print(" ".join(text_with_gaps))
 
         print(answer_title)
 
         print("".join(answers))
+        """
 
+        #todo - need to refactor the output to align with fill_gaps
+        raise GapFillerException
         return title_and_instructions, " ".join(text_with_gaps), answer_title, "".join(answers)
 
 
