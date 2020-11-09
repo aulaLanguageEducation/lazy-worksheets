@@ -161,6 +161,7 @@ class GapFiller:
                        'removed_words_final': removed_words_final,
                        'answer_title': answer_title,
                        'answers_final': answers_final,
+                       'url':
                        'exercise_type': 'gap fill worksheet'}
 
         return output_dict
