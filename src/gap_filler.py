@@ -7,13 +7,13 @@ import logging as logger
 logger.basicConfig(level=logger.INFO)
 
 
-class GapFinderException(Exception):
+class GapFillerException(Exception):
 
     def __init__(self, message):
         self.message = message
 
 
-class GapFinder:
+class GapFiller:
 
     def __init__(self):
         self.nlp = spacy.load('en_core_web_sm')
@@ -55,7 +55,7 @@ class GapFinder:
 
         return remove_words_list + leave_words_list
 
-    def find_gaps(self, txt: str, random_seed=None) -> dict:
+    def fill_gaps(self, txt: str, random_seed=None) -> dict:
         """This method removes words from a text and provides them in a list
         for the learner to replace. The learner must fill each gap in the text
         with the correct word."""
@@ -164,7 +164,7 @@ class GapFinder:
 
         return output_dict
 
-    def multiple_choice_gapfiller(self, txt, random_seed=None):
+    def multiple_choice_fill_gaps(self, txt, random_seed=None):
         """This method removes words from a text and provides a series of
         multiple choice questions for the learner to complete. The learner
         must choose the correct word from three options for each gap in the text."""
@@ -236,18 +236,18 @@ class GapFinder:
 
         if len(list_of_words_nouns) >= 1:
             if len(noun_distractor_list) <= 1:
-                raise GapFinderException("This text doesn't contain enough words to generate a multiple choice task!")
+                raise GapFillerException("This text doesn't contain enough words to generate a multiple choice task!")
 
         if len(list_of_words_adjectives) >= 1:
             if len(adjective_distractor_list) <= 1:
-                raise GapFinderException("This text doesn't contain enough words to generate a multiple choice task!")
+                raise GapFillerException("This text doesn't contain enough words to generate a multiple choice task!")
 
         # The multiple choice questions, one for each gap in the text
         questions = []
 
         list_of_questions_counter = 1
 
-        # TODO The mutliple choice questions work better with larger texts. Future amendments are needed in order to
+        # TODO The multiple choice questions work better with larger texts. Future amendments are needed in order to
         #  prevent the repetition of the same distractor in each question, i.e. two incorrect options which are both
         #  the same word!
 
@@ -496,14 +496,14 @@ def main():
 
     text_output = utils.get_body(TEST_URL_GUARDIAN)
 
-    this_gap_finder = GapFinder()
+    this_gap_finder = GapFiller()
 
-    this_gap_finder.find_gaps(text_output)
+    this_gap_finder.fill_gaps(text_output)
 
     print("------------------------------------------------------------------")
     print(" ")
 
-    this_gap_finder.multiple_choice_gapfiller(text_output)
+    this_gap_finder.multiple_choice_fill_gaps(text_output)
 
     print("------------------------------------------------------------------")
     print(" ")
