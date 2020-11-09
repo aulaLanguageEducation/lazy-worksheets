@@ -55,12 +55,12 @@ class GapFiller:
 
         return remove_words_list + leave_words_list
 
-    def fill_gaps(self, txt: str, random_seed=None) -> dict:
+    def fill_gaps(self, url_output_dict: dict, random_seed=None) -> dict:
         """This method removes words from a text and provides them in a list
         for the learner to replace. The learner must fill each gap in the text
         with the correct word."""
 
-        doc = self.nlp(txt)
+        doc = self.nlp(url_output_dict['article_body'])
 
         if random_seed is not None:
             random.seed(random_seed)
@@ -82,7 +82,7 @@ class GapFiller:
         question_counter = 1
 
         # Using the 'balls in a bag' analogy, this list called 'decider' is 'the bag'
-        decider = self.decider_bag(txt, tags_of_interest, 10)
+        decider = self.decider_bag(url_output_dict['article_body'], tags_of_interest, 10)
 
         for token in doc:
             if token.tag_ in tags_of_interest:
@@ -161,7 +161,7 @@ class GapFiller:
                        'removed_words_final': removed_words_final,
                        'answer_title': answer_title,
                        'answers_final': answers_final,
-                       'url':
+                       'url': url_output_dict['url'],
                        'exercise_type': 'gap fill worksheet'}
 
         return output_dict
