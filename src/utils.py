@@ -98,7 +98,7 @@ def find_article_parent_class(my_soup):
     return article_parent_tag.find_all('p')
 
 
-def get_body(url: str, random_seed: float = None) -> str:
+def get_body(url: str, random_seed: float = None) -> dict:
     """
     This function gets the main body of a news page
 
@@ -208,7 +208,7 @@ def get_body(url: str, random_seed: float = None) -> str:
     text_list = [item.string for item in article_content if item.string is not None]
 
     output_dirty = ''.join(text_list)
-    return encoding_mapper.map(output_dirty)
+    return {'url': url, 'article_body': encoding_mapper.map(output_dirty)}
 
 
 def preprocess_text(input_text: str) -> str:

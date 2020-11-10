@@ -10,21 +10,19 @@ utils_test_folder_name = 'tests_utils'
 class TestPipeline(TestCase):
 
     def test_get_body(self, random_seed=1235):
-        TEST_URL_GUARDIAN = 'https://www.theguardian.com/uk-news/2019/dec/28/government-exposes-addresses-of-new-year-honours-recipients'
+        test_url = 'https://www.theguardian.com/uk-news/2019/dec/28/government-exposes-addresses-of-new-year-honours-recipients'
 
-        actual_output = utils.get_body(TEST_URL_GUARDIAN)
+        actual_output = utils.get_body(test_url)
 
         if utils_test_folder_name in os.getcwd():
             test_file_dir = os.getcwd()
         else:
             test_file_dir = os.path.join(os.getcwd(), utils_test_folder_name)
 
-
         with open(os.path.join(test_file_dir, 'guardian_expected_output.txt'), "r") as file:
             expected_output = file.read()
 
-        self.assertEqual(expected_output, actual_output)
-
+        self.assertEqual(expected_output, actual_output['article_body'])
 
     def test_get_body_raises_error(self, random_seed=1235):
 
@@ -113,7 +111,6 @@ class TestPipeline(TestCase):
             'http://shit.www.nottelegraph.co.uk/',
             'http://www.noTtheguardian.com/',
 
-
         ]
 
         for item in test_cases:
@@ -154,5 +151,3 @@ class TestPipeline(TestCase):
         for url, website in test_cases:
             with self.subTest():
                 self.assertEqual(website, utils.supported_news_site_check(url))
-
-
