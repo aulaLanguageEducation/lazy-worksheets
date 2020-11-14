@@ -7,8 +7,8 @@ import requests
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
-from src import encoding_mappings
-from src.enums import (
+import encoding_mappings
+from enums import (
     ACCEPTED_NEWS_SITES,
     DANGEROUS_URL_REGEX,
 )

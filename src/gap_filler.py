@@ -1,7 +1,7 @@
 import math as maths
 import random
 import spacy
-from src import utils
+import utils
 import logging as logger
 
 logger.basicConfig(level=logger.INFO)
