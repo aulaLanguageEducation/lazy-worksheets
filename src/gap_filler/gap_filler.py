@@ -60,7 +60,7 @@ class GapFiller:
         for the learner to replace. The learner must fill each gap in the text
         with the correct word."""
 
-        doc = self.nlp(url_output_dict['article_body'])
+        doc = self.nlp(url_output_dict.get('article_body', ''))
 
         if random_seed is not None:
             random.seed(random_seed)
@@ -100,10 +100,10 @@ class GapFiller:
 
         title = 'Gap Filler!'
 
-        instructions = '\nRead the below text. Can you fill the gaps with ' \
+        instructions_primary = '\nRead the below text. Can you fill the gaps with ' \
                        'the words in the list below?\n'
 
-        question_title = '\nThe removed words are below: \n'
+        instructions_secondary = '\nThe removed words are below:\n'
 
         # The below lines of code add the removed words to an alphabetical list for the student to view,
         # see the final variable in this process, 'removed_words', below
@@ -142,11 +142,11 @@ class GapFiller:
         # TODO remove all print statements when code is ready for website. They appear grouped together in
         #  each method, as per below
         logger.info(title)
-        logger.info(instructions)
+        logger.info(instructions_primary)
 
         logger.info(main_text_final)
 
-        logger.info(question_title)
+        logger.info(instructions_secondary)
 
         logger.info(removed_words_final)
 
@@ -155,10 +155,10 @@ class GapFiller:
         logger.info(answers_final)
 
         output_dict = {'title': title,
-                       'instructions': instructions,
+                       'instructions_primary': instructions_primary,
                        'main_text_final': main_text_final,
-                       'question_title': question_title,
-                       'removed_words_final': removed_words_final,
+                       'instructions_secondary': instructions_secondary,
+                       'removed_words': removed_words_final,
                        'answer_title': answer_title,
                        'answers_final': answers_final,
                        'url': url_output_dict['url'],
