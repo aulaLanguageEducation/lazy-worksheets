@@ -55,7 +55,7 @@ def get_ultimate_tag_parent(input_tag):
     parent_class = None
     while_count = 0
     parent_tag = input_tag.parent
-    while next_parent and while_count < 10:
+    while next_parent and while_count < 50:
         while_count += 1
         try:
             parent_class = parent_tag['class']
@@ -171,7 +171,7 @@ def get_body(url: str, random_seed: float = None) -> dict:
 
     site_domain = get_domain(url)
     if site_domain is None:
-        raise UrlException(" Sorry, something has gone horribly wrong.")
+        raise UrlException("Sorry, something has gone horribly wrong.")
 
     # Query the URL and pulling data out of HTML
     soup = BeautifulSoup(response.content, "html.parser")
@@ -194,15 +194,12 @@ def get_body(url: str, random_seed: float = None) -> dict:
 
 
     # get content of article (as html tag)
-    article_content = soup.find(class_=ACCEPTED_NEWS_SITES[site_domain])
+    article_content = soup.find(class_=ACCEPTED_NEWS_SITES.get(site_domain, ''))
+
+    article_content = find_article_parent_class(soup)
 
     if article_content is None:
         article_content = find_article_parent_class(soup)
-
-    if article_content is None:
-        article_content = find_article_parent_class(soup)
-        raise UrlException(url, "Sorry, we are not able to download this content at the moment.")
-
 
     # get the text content
     text_list = [item.string for item in article_content if item.string is not None]
