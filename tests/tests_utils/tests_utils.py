@@ -9,7 +9,7 @@ utils_test_folder_name = 'tests_utils'
 
 class TestPipeline(TestCase):
 
-    def test_get_body_guardian(self, random_seed=1235):
+    def test_get_body__guardian(self, random_seed=1235):
         test_url = 'https://www.theguardian.com/uk-news/2019/dec/28/government-exposes-addresses-of-new-year-honours-recipients'
 
         actual_output = utils.get_body(test_url)
@@ -20,6 +20,43 @@ class TestPipeline(TestCase):
             test_file_dir = os.path.join(os.getcwd(), utils_test_folder_name)
 
         with open(os.path.join(test_file_dir, 'guardian_expected_output.txt'), "r") as file:
+            expected_output = file.read()
+
+        self.assertEqual(expected_output, actual_output['article_body'])
+
+    def test_get_body__bbc_dot_co_uk(self, random_seed=1235):
+        """
+
+        todo - find the youngest descendant with at least 80% of <p> in article
+               ALSO line 205 in utils at the moment will expect the <p> tags to be direct children of content class
+               this will no longer by true if we find the youngest descendant - will need to get <p> tags from all descendants
+               in order.
+        """
+        test_url = 'https://www.bbc.co.uk/news/uk-politics-55191432'
+
+        actual_output = utils.get_body(test_url)
+
+        if utils_test_folder_name in os.getcwd():
+            test_file_dir = os.getcwd()
+        else:
+            test_file_dir = os.path.join(os.getcwd(), utils_test_folder_name)
+
+        with open(os.path.join(test_file_dir, 'bbc_dot_co_uk_expected_output.txt'), "r") as file:
+            expected_output = file.read()
+
+        self.assertEqual(expected_output, actual_output['article_body'])
+
+    def test_get_body__nytimes(self, random_seed=1235):
+        test_url = 'https://www.nytimes.com/2020/12/04/upshot/epidemiologists-virus-survey-.html'
+
+        actual_output = utils.get_body(test_url)
+
+        if utils_test_folder_name in os.getcwd():
+            test_file_dir = os.getcwd()
+        else:
+            test_file_dir = os.path.join(os.getcwd(), utils_test_folder_name)
+
+        with open(os.path.join(test_file_dir, 'nytimes_expected_output.txt'), "r") as file:
             expected_output = file.read()
 
         self.assertEqual(expected_output, actual_output['article_body'])

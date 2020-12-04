@@ -4,6 +4,7 @@ ACCEPTED_NEWS_SITES = {
 
     'theguardian.com': 'article-body-commercial-selector',
     'bbc.co.uk': 'story-body__inner',
+    'bbc.com': 'story-body__inner',
     'nytimes.com': 'meteredContent css-1r7ky0e',
     'news.sky.com': 'sdc-site-layout-wrap site-wrap site-wrap-padding',
     'metro.co.uk': 'article-body',
