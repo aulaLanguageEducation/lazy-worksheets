@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
 import random
-from src import utils
+from utils import utils
 import os
 
 utils_test_folder_name = 'tests_utils'
@@ -9,7 +9,7 @@ utils_test_folder_name = 'tests_utils'
 
 class TestPipeline(TestCase):
 
-    def test_get_body(self, random_seed=1235):
+    def test_get_body_guardian(self, random_seed=1235):
         test_url = 'https://www.theguardian.com/uk-news/2019/dec/28/government-exposes-addresses-of-new-year-honours-recipients'
 
         actual_output = utils.get_body(test_url)
