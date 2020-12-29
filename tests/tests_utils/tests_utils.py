@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, skip
 from unittest.mock import patch
 import random
 from utils import utils
@@ -24,6 +24,7 @@ class TestPipeline(TestCase):
 
         self.assertEqual(expected_output, actual_output['article_body'])
 
+    @skip('not ready yet')
     def test_get_body__bbc_dot_co_uk(self, random_seed=1235):
         """
 
@@ -46,6 +47,7 @@ class TestPipeline(TestCase):
 
         self.assertEqual(expected_output, actual_output['article_body'])
 
+    @skip('not ready yet')
     def test_get_body__nytimes(self, random_seed=1235):
         test_url = 'https://www.nytimes.com/2020/12/04/upshot/epidemiologists-virus-survey-.html'
 
@@ -61,6 +63,7 @@ class TestPipeline(TestCase):
 
         self.assertEqual(expected_output, actual_output['article_body'])
 
+    @skip('not ready yet')
     def test_get_body_raises_error(self, random_seed=1235):
 
         test_cases = [
@@ -72,6 +75,7 @@ class TestPipeline(TestCase):
             with self.subTest():
                 with self.assertRaises(utils.UrlException):
                     utils.get_body(item)
+
 
     def test_url_safety_check__true(self):
 
