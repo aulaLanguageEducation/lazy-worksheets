@@ -1,7 +1,7 @@
 # List of URLs for news sites with their respective 'main body of text' HTML tags
 ACCEPTED_NEWS_SITES = {
 
-
+    'speakenglishwithadam.com': '',
     'theguardian.com': 'article-body-commercial-selector',
     'bbc.co.uk': 'story-body__inner',
     'bbc.com': 'story-body__inner',

@@ -24,6 +24,17 @@ class TestPipeline(TestCase):
 
         self.assertEqual(expected_output, actual_output['article_body'])
 
+
+    def test_get_body__adams_website(self, random_seed=1235):
+        test_url = 'https://www.speakenglishwithadam.com/'
+
+        actual_output = utils.get_body(test_url)
+
+        expected_output = 'Who wants to speak? Who wants to learn? Who wants to improve? Who wants to explore? Who wants to practise?'
+
+        self.assertEqual(expected_output, actual_output['article_body'])
+
+
     @skip('not ready yet')
     def test_get_body__bbc_dot_co_uk(self, random_seed=1235):
         """
